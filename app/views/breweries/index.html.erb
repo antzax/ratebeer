@@ -1,5 +1,8 @@
 <p style="color: green"><%= notice %></p>
 <% content_for :title, "Breweries" %>
+<%= link_to "List of beers", beers_path %>
+<%= link_to "New brewery", new_brewery_path %>
+<hr>
 <h1>Breweries</h1>
 <p>Number of breweries: <%= @breweries.count %></p>
 <div id="breweries">
@@ -14,4 +17,3 @@
       </p>
     <% end %>
   </div>
-  <%= link_to "New brewery", new_brewery_path %>
