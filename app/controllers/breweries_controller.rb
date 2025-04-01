@@ -1,6 +1,6 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: %i[ show edit update destroy ]
-
+  before_action :authenticate, only: %i[ destroy ]
   # GET /breweries or /breweries.json
   def index
     @breweries = Brewery.all
@@ -66,5 +66,14 @@ class BreweriesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def brewery_params
       params.expect(brewery: [ :name, :year ])
+    end
+
+    def authenticate
+      admin_accounts = { "admin" => "1234", "root" => "root", "user" => "letmein", "guest" => "toor" }
+
+      authenticate_or_request_with_http_basic do |username, password|
+        raise "Username or password is wrong" unless admin_accounts.fetch(username) === password
+        return true
+      end
     end
 end
