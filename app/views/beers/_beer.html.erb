@@ -3,22 +3,16 @@
     <strong>Name:</strong>
     <%=link_to beer.name, beer %>
   </p>
-  <br>
   <p>
     <strong>Brewery: </strong><%=link_to beer.brewery.name, beer.brewery %>
   </p>
-  <br>
   <p>
     <strong>Style:</strong>
     <%= beer.style %>
   </p>
-  <br>
-  <p>
-    <%if beer.ratings.any? %>
-      <p>Beer has <%= pluralize(beer.ratings.count, "rating") %> with an average of <%= beer.average %>
-      <% else%>
-        <p>Beer has no ratings yet</p>
-      <% end%>
-    </p>
-    <hr>
-  </div>
+  <%if  beer.ratings.any? %>
+    <p>Beer has <%= pluralize(beer.ratings.count, "rating") %> with an average of <%= beer.average %> </p>
+  <% else %>
+    <p>No ratings yet</p>
+  <% end %>
+</div>

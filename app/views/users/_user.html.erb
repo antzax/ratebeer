@@ -1,0 +1,6 @@
+<div id="<%= dom_id user %>">
+  <h2>Username:</h2>
+  <p><%= current_user.username.capitalize %></p>
+  <p>Has made <%= pluralize current_user.ratings.count, "ratings" %>, average rating <%= current_user.average %></p>
+
+</div>

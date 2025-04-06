@@ -9,8 +9,15 @@ class RatingsController < ApplicationController
   end
 
   def create
-    Rating.create params.expect(rating: [ :beer_id, :score ])
-    redirect_to ratings_path
+    @rating = Rating.create params.expect(rating: [ :beer_id, :score ])
+    @rating.user = current_user
+
+    if @rating.save
+      redirect_to current_user
+    else
+      @beers = Beer.all
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy

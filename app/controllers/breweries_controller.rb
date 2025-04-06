@@ -1,6 +1,6 @@
 class BreweriesController < ApplicationController
-  before_action :set_brewery, only: %i[ show edit update destroy ]
-  before_action :authenticate, only: %i[ destroy ]
+  before_action :set_brewery, only: %i[show edit update destroy]
+  before_action :authenticate, only: %i[destroy]
   # GET /breweries or /breweries.json
   def index
     @breweries = Brewery.all
@@ -58,22 +58,24 @@ class BreweriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_brewery
-      @brewery = Brewery.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def brewery_params
-      params.expect(brewery: [ :name, :year ])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_brewery
+    @brewery = Brewery.find(params.expect(:id))
+  end
 
-    def authenticate
-      admin_accounts = { "admin" => "1234", "root" => "root", "user" => "letmein", "guest" => "toor" }
+  # Only allow a list of trusted parameters through.
+  def brewery_params
+    params.expect(brewery: [ :name, :year ])
+  end
 
-      authenticate_or_request_with_http_basic do |username, password|
-        raise "Username or password is wrong" unless admin_accounts.fetch(username) === password
-        return true
-      end
+  def authenticate
+    admin_accounts = { "admin" => "1234", "root" => "root", "user" => "letmein", "guest" => "toor", "mari" => "secret" }
+
+    authenticate_or_request_with_http_basic do |username, password|
+      raise "Username or password is wrong" unless admin_accounts.fetch(username).match?(password)
+
+      return true
     end
+  end
 end

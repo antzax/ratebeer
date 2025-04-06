@@ -1,1 +1,8 @@
-<%= rating.beer.name %> <%= rating.score %>
+<li>
+  <%= rating.beer.name %> <%= rating.score %>
+  <% if current_page? ratings_path %>
+    <%= link_to rating.user.username, rating.user %>
+  <% else %>
+    <%= link_to 'Delete', rating, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+  <% end%>
+</li>
