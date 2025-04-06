@@ -64,7 +64,7 @@ end
 
 group :production do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  # gem "pg"
+  gem "pg"
 end
 
 group :test do
